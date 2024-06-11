@@ -1,3 +1,4 @@
+import os
 import json
 import logging
 import uuid
@@ -208,6 +209,24 @@ class SyncServer(LockingServer):
         # Initialize the connection to the DB
         self.config = MemGPTConfig.load()
         print(f"server :: loading configuration from '{self.config.config_path}'")
+
+        # Check if the config file exists
+        if os.path.exists(self.config.config_path):
+            print("Config file exists.")
+        else:
+            print("Config file does not exist.")
+        
+        # Print the contents of the config file
+        try:
+            with open(self.config.config_path, 'r') as file:
+                config_contents = file.read()
+                print(f"Config file contents:\n{config_contents}")
+        except FileNotFoundError:
+            print("Error: Config file not found.")
+        except Exception as e:
+            print(f"Error reading config file: {str(e)}")
+        
+        print(f"server config :: {self.config=}")
         assert self.config.persona is not None, "Persona must be set in the config"
         assert self.config.human is not None, "Human must be set in the config"
 
