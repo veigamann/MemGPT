@@ -1,0 +1,26 @@
+# fly.toml app configuration file generated for mem-gpt on 2024-06-11T11:19:43-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'mem-gpt'
+primary_region = 'gru'
+
+[build]
+
+[env]
+  TZ = 'America/Sao_Paulo'
+  MEMGPT_SERVER_PASS='M3MGPT_M4TH3U5V31G4'
+
+[http_service]
+  internal_port = 8083
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
